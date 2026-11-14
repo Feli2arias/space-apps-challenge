@@ -1,11 +1,13 @@
 // Contract: StatBand
 // Props: dict (Dictionary, required)
 // Variants: none
-// States: static; empty list renders an empty band
+// States: static; empty list renders an empty band. Its bottom edge dissolves into the
+//         next section with a dithered strip (PixelFade)
 // Accessibility: a labelled section with a description list; white and muted text on ink
 //                are 17:1 and 9.5:1
 // Responsive: columns auto-fit (minimum 13.75rem), from one column on phones to four on desktop
 
+import { PixelFade } from "@/components/pixel/pixel-fade";
 import type { Dictionary } from "@/lib/i18n/types";
 
 interface StatBandProps {
@@ -18,7 +20,7 @@ export function StatBand({ dict }: StatBandProps) {
   return (
     <section
       aria-label={stats.ariaLabel}
-      className="border-t border-line-on-ink bg-ink text-white"
+      className="relative border-t border-line-on-ink bg-ink text-white"
     >
       <dl className="mx-auto grid max-w-page grid-cols-[repeat(auto-fit,minmax(13.75rem,1fr))]">
         {stats.items.map((stat) => (
@@ -31,6 +33,7 @@ export function StatBand({ dict }: StatBandProps) {
           </div>
         ))}
       </dl>
+      <PixelFade />
     </section>
   );
 }

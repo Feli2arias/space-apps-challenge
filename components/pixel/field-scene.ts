@@ -1,3 +1,5 @@
+import { createLayout, fadeRows, furrowX, type Layout } from "./field-layout";
+import { createParcel, drawScan, type ScanTones } from "./scan";
 import {
   clamp,
   createGrid,
@@ -5,7 +7,6 @@ import {
   drawLine,
   fillRect,
   plot,
-  stamp,
   Tone,
   type Frame,
   type PixelGrid,
@@ -14,7 +15,7 @@ import {
 
 /**
  * A farm seen from the edge of the field: far hills, a ploughed field whose
- * furrows run to the horizon, maize at the edges and, in the hero, a parcel
+ * furrows run to the horizon, maize swaying in a light wind at the edges and, in the hero, a parcel
  * outlined in the soil with a satellite passing over it.
  */
 
@@ -35,10 +36,12 @@ interface FieldTones {
 interface FieldOptions {
   readonly tones: FieldTones;
   readonly sun: boolean;
-  readonly satellite: boolean;
+  /** Parcel outline and the satellite pass that reads it. */
   readonly parcel: boolean;
   /** Seedlings along every furrow, for the closing scene. */
   readonly sprouts: boolean;
+  /** Dissolve the bottom rows into the ground tone so the art joins the band below. */
+  readonly fade: boolean;
 }
 
 const HERO: FieldOptions = {
@@ -54,9 +57,9 @@ const HERO: FieldOptions = {
     plant: Tone.ink,
   },
   sun: true,
-  satellite: true,
   parcel: true,
   sprouts: false,
+  fade: true,
 };
 
 const CLOSING: FieldOptions = {
@@ -72,22 +75,11 @@ const CLOSING: FieldOptions = {
     plant: Tone.ink,
   },
   sun: false,
-  satellite: false,
   parcel: false,
   sprouts: true,
+  fade: false,
 };
 
-const SATELLITE = [
-  "PPPPP..B..PPPPP",
-  "P.P.P.BBB.P.P.P",
-  "PPPPPBBBBBPPPPP",
-  "P.P.P.BBB.P.P.P",
-  "PPPPP.BBB.PPPPP",
-  "......BBB......",
-  ".....B.B.B.....",
-] as const;
-
-const HORIZON_RATIO = 0.44;
 const MIN_FURROW_GAP = 4;
 const SOLID: (tone: ToneIndex) => () => ToneIndex = (tone) => () => tone;
 const MIN_WIDTH_FOR_PLANTS = 70;
@@ -105,31 +97,6 @@ const OUTER_PLANTS: readonly PlantPlacement[] = [
   [0.06, 0.14],
   [0.94, 0.1],
 ];
-
-interface Layout {
-  readonly width: number;
-  readonly height: number;
-  readonly horizon: number;
-  readonly vanishX: number;
-  /** Distance between furrows at the bottom edge. */
-  readonly spacing: number;
-}
-
-function createLayout(width: number, height: number): Layout {
-  return {
-    width,
-    height,
-    horizon: Math.round(height * HORIZON_RATIO),
-    vanishX: width * 0.5,
-    spacing: Math.max(12, width / 11),
-  };
-}
-
-/** Column of furrow line `index` at row `y`; all lines meet at the vanishing point. */
-function furrowX(layout: Layout, index: number, y: number): number {
-  const depth = (y - layout.horizon) / Math.max(1, layout.height - layout.horizon);
-  return layout.vanishX + index * layout.spacing * depth;
-}
 
 function drawFarHills(grid: PixelGrid, layout: Layout, tone: ToneIndex): void {
   const { width, height, horizon } = layout;
@@ -230,98 +197,14 @@ function drawFurrows(grid: PixelGrid, layout: Layout, options: FieldOptions): vo
   }
 }
 
-interface Parcel {
-  readonly left: number;
-  readonly right: number;
-  readonly top: number;
-  readonly bottom: number;
-}
-
-function createParcel(layout: Layout): Parcel {
-  const depth = layout.height - layout.horizon;
-  return {
-    left: -1,
-    right: 2,
-    top: layout.horizon + Math.round(depth * 0.36),
-    bottom: layout.horizon + Math.round(depth * 0.86),
-  };
-}
-
-function drawParcel(
-  grid: PixelGrid,
-  layout: Layout,
-  parcel: Parcel,
-  tones: FieldTones,
-  tick: number,
-): void {
-  const edge = (index: number, y: number) => Math.round(furrowX(layout, index, y));
-  const accent = SOLID(tones.accent);
-
-  // Furrows inside the parcel take the accent colour.
-  for (let index = parcel.left; index < parcel.right; index += 1) {
-    drawLine(
-      grid,
-      furrowX(layout, index + 0.5, parcel.top),
-      parcel.top,
-      furrowX(layout, index + 0.5, parcel.bottom),
-      parcel.bottom,
-      (step) => (step % 3 < 2 ? tones.accent : null),
-    );
-  }
-
-  const topLeft = edge(parcel.left, parcel.top);
-  const topRight = edge(parcel.right, parcel.top);
-  const bottomLeft = edge(parcel.left, parcel.bottom);
-  const bottomRight = edge(parcel.right, parcel.bottom);
-
-  drawLine(grid, topLeft, parcel.top, bottomLeft, parcel.bottom, accent);
-  drawLine(grid, topRight, parcel.top, bottomRight, parcel.bottom, accent);
-  fillRect(grid, topLeft, parcel.top, topRight - topLeft + 1, 1, tones.accent);
-  fillRect(grid, bottomLeft, parcel.bottom, bottomRight - bottomLeft + 1, 1, tones.accent);
-
-  // A scan line sweeps down the parcel, as if the satellite were reading it.
-  const span = Math.max(1, parcel.bottom - parcel.top - 1);
-  const scanY = parcel.top + 1 + (tick % span);
-  for (let x = edge(parcel.left, scanY) + 1; x < edge(parcel.right, scanY); x += 1) {
-    if ((x + tick) % 2 === 0) plot(grid, x, scanY, tones.light);
-  }
-
-  // Corner handles, like the ones used to draw a parcel on the map.
-  const corners: ReadonlyArray<readonly [number, number]> = [
-    [topLeft, parcel.top],
-    [topRight, parcel.top],
-    [bottomLeft, parcel.bottom],
-    [bottomRight, parcel.bottom],
-  ];
-  corners.forEach(([x, y]) => {
-    fillRect(grid, x - 1, y - 1, 3, 3, tones.light);
-    plot(grid, x, y, tones.accent);
-  });
-}
-
-function drawSatellite(
-  grid: PixelGrid,
-  layout: Layout,
-  parcel: Parcel,
-  tones: FieldTones,
-  tick: number,
-): void {
-  const spriteWidth = SATELLITE[0].length;
-  const bob = Math.floor(tick / 6) % 2;
-  const x = Math.round(clamp(layout.width * 0.74, 0, layout.width - spriteWidth - 1));
-  const y = Math.max(1, Math.round(layout.height * 0.04)) + bob;
-
-  const targetY = Math.round((parcel.top + parcel.bottom) / 2);
-  const targetX = Math.round(furrowX(layout, (parcel.left + parcel.right) / 2, targetY));
-  const originX = x + Math.floor(spriteWidth / 2);
-  const originY = y + SATELLITE.length + 1;
-
-  // Marching dots: two on, two off, shifting one pixel per tick.
-  drawLine(grid, originX, originY, targetX, targetY, (step) =>
-    (((step - tick) % 4) + 4) % 4 < 2 ? tones.accent : null,
-  );
-
-  stamp(grid, SATELLITE, x, y, { P: tones.accent, B: Tone.ink });
+/**
+ * How far the wind pushes a plant at one tick, in art pixels: -1, 0 or 1. A
+ * slow swell sets the strength of the gusts and each plant answers a little
+ * after its neighbour, so they do not move as one block.
+ */
+export function windSway(tick: number, plantIndex: number): number {
+  const gust = 0.55 + 0.45 * Math.sin(tick * 0.09);
+  return Math.round(Math.sin(tick * 0.42 - plantIndex * 0.9) * 1.15 * gust);
 }
 
 function drawLeaf(
@@ -331,6 +214,7 @@ function drawLeaf(
   side: number,
   length: number,
   tone: ToneIndex,
+  sway: number,
 ): void {
   let previousX = rootX;
   let previousY = rootY;
@@ -339,8 +223,10 @@ function drawLeaf(
     // Rises out of the stalk, arches over and droops at the tip.
     const lift = Math.sin(u * Math.PI * 0.85) * length * 0.5;
     const droop = u * u * u * length * 0.7;
-    const x = rootX + side * step;
-    const y = rootY - Math.round(lift) + Math.round(droop);
+    // The wind moves the outer half of the leaf: it stretches downwind and lifts upwind.
+    const push = u > 0.5 ? sway : 0;
+    const x = rootX + side * step + push;
+    const y = rootY - Math.round(lift) + Math.round(droop) - (push * side < 0 && u > 0.8 ? 1 : 0);
     drawLine(grid, previousX, previousY, x, y, SOLID(tone));
     if (u < 0.6) plot(grid, x, y + 1, tone);
     previousX = x;
@@ -354,21 +240,26 @@ function drawMaize(
   baseX: number,
   topY: number,
   tone: ToneIndex,
+  sway: number,
 ): void {
   const { height } = layout;
   const thick = height >= 60;
   const stalkWidth = thick ? 2 : 1;
   const leafGap = Math.max(4, Math.round(height * 0.1));
   const longestLeaf = Math.max(6, Math.round(height * 0.2));
+  // The top of the stalk leans with the wind; the rest stays planted.
+  const bendRows = Math.max(2, Math.round((height - topY) * 0.12));
+  const tipX = baseX + sway;
 
   // Tassel: three short spikes.
-  plot(grid, baseX, topY - 1, tone);
-  plot(grid, baseX - 1, topY, tone);
-  plot(grid, baseX + stalkWidth, topY, tone);
-  plot(grid, baseX - 2, topY - 1, tone);
-  plot(grid, baseX + stalkWidth + 1, topY - 1, tone);
+  plot(grid, tipX, topY - 1, tone);
+  plot(grid, tipX - 1, topY, tone);
+  plot(grid, tipX + stalkWidth, topY, tone);
+  plot(grid, tipX - 2, topY - 1, tone);
+  plot(grid, tipX + stalkWidth + 1, topY - 1, tone);
 
-  fillRect(grid, baseX, topY, stalkWidth, height - topY, tone);
+  fillRect(grid, tipX, topY, stalkWidth, bendRows, tone);
+  fillRect(grid, baseX, topY + bendRows, stalkWidth, height - topY - bendRows, tone);
 
   let side = -1;
   let node = 0;
@@ -376,20 +267,43 @@ function drawMaize(
     // Leaves get longer towards the base of the plant.
     const length = Math.round(longestLeaf * Math.min(1, 0.6 + node * 0.15));
     const rootX = side > 0 ? baseX + stalkWidth - 1 : baseX;
-    drawLeaf(grid, rootX, leafY, side, length, tone);
+    drawLeaf(grid, rootX, leafY, side, length, tone, sway);
     side = -side;
     node += 1;
   }
 }
 
-function drawPlants(grid: PixelGrid, layout: Layout, tone: ToneIndex): void {
+function drawPlants(grid: PixelGrid, layout: Layout, tone: ToneIndex, tick: number): void {
   const { width, height } = layout;
   if (width < MIN_WIDTH_FOR_PLANTS) return;
   // On narrow canvases a single plant per side keeps the leaves from tangling.
   const plants = width < WIDTH_FOR_PLANT_PAIRS ? OUTER_PLANTS : ALL_PLANTS;
-  plants.forEach(([xRatio, topRatio]) => {
-    drawMaize(grid, layout, Math.round(width * xRatio), Math.round(height * topRatio), tone);
+  plants.forEach(([xRatio, topRatio], index) => {
+    const sway = windSway(tick, index);
+    drawMaize(grid, layout, Math.round(width * xRatio), Math.round(height * topRatio), tone, sway);
   });
+}
+
+function scanTones(tones: FieldTones): ScanTones {
+  return { accent: tones.accent, accentDeep: Tone.cinnabarDeep, light: tones.light, body: Tone.ink, furrow: tones.furrow };
+}
+
+/**
+ * Ordered-dither dissolve: over the last rows every pixel that is not ground
+ * gives way to the ground tone, a few more per row, so the bottom row is solid
+ * ground and the scene runs into the band below without a hard edge.
+ */
+function fadeBottom(grid: PixelGrid, layout: Layout, ground: ToneIndex): void {
+  const rows = Math.min(fadeRows(layout), grid.height);
+  for (let row = 0; row < rows; row += 1) {
+    const y = grid.height - rows + row;
+    // Share of detail that survives in this row: just under 1 at the top, 0 at the bottom.
+    const keep = 1 - (row + 1) / rows;
+    for (let x = 0; x < grid.width; x += 1) {
+      const index = y * grid.width + x;
+      if (grid.cells[index] !== ground && !dither(x, y, keep)) grid.cells[index] = ground;
+    }
+  }
 }
 
 function drawField(frame: Frame, options: FieldOptions): PixelGrid {
@@ -405,13 +319,10 @@ function drawField(frame: Frame, options: FieldOptions): PixelGrid {
   drawGround(grid, layout, tones);
   drawFurrows(grid, layout, options);
 
-  if (options.parcel) {
-    const parcel = createParcel(layout);
-    drawParcel(grid, layout, parcel, tones, frame.tick);
-    if (options.satellite) drawSatellite(grid, layout, parcel, tones, frame.tick);
-  }
+  if (options.parcel) drawScan(grid, layout, createParcel(layout), scanTones(tones), frame.tick);
 
-  drawPlants(grid, layout, tones.plant);
+  drawPlants(grid, layout, tones.plant, frame.tick);
+  if (options.fade) fadeBottom(grid, layout, tones.ground);
   return grid;
 }
 

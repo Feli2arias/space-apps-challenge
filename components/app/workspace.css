@@ -1,0 +1,36 @@
+/*
+ * Entrance of the results panel: a few hard steps, like a sprite sliding into
+ * place, in keeping with the stepped motion of the rest of the site. It comes
+ * up from the bottom as a sheet on small screens and in from the right as a
+ * side panel from lg (64rem) up. With reduced motion it simply appears.
+ */
+
+@keyframes bts-panel-in-sheet {
+  from {
+    translate: 0 2rem;
+    opacity: 0;
+  }
+}
+
+@keyframes bts-panel-in-side {
+  from {
+    translate: 2rem 0;
+    opacity: 0;
+  }
+}
+
+.bts-panel-enter {
+  animation: bts-panel-in-sheet 320ms steps(4, end) both;
+}
+
+@media (min-width: 64rem) {
+  .bts-panel-enter {
+    animation-name: bts-panel-in-side;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bts-panel-enter {
+    animation: none;
+  }
+}

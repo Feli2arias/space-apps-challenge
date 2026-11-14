@@ -1,0 +1,212 @@
+/*
+ * Leaflet, dressed in the Before the Seed tokens.
+ *
+ * Leaflet ships its own stylesheet (rounded, blurred, grey). This file is
+ * imported after it and restyles only what clashes: square corners, hard pixel
+ * shadows, mono labels, and colours taken from the tokens in app/globals.css.
+ * No colour, size or shadow is defined here that is not a token.
+ */
+
+.bts-map .leaflet-container {
+  background: var(--color-mist);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  /* The map never sits above the page's own layers (loader, sheet). */
+  z-index: 0;
+}
+
+/* A click chooses a point or marks a corner, so the pointer says "aim", not "drag". */
+.bts-map .leaflet-grab {
+  cursor: crosshair;
+}
+
+.bts-map .leaflet-dragging .leaflet-grab {
+  cursor: grabbing;
+}
+
+.bts-map .leaflet-container:focus-visible {
+  outline: 2px solid var(--color-cinnabar-deep);
+  outline-offset: -2px;
+}
+
+/* Sentinel-2 pixels are 10 m; enlarged, they stay honest squares instead of a blur. */
+.bts-map .bts-tiles-satellite {
+  image-rendering: pixelated;
+}
+
+/* Zoom buttons: 44px targets, square, ink border, hard shadow. */
+.bts-map .leaflet-bar,
+.bts-map .leaflet-touch .leaflet-bar {
+  border: 1px solid var(--color-ink);
+  border-radius: 0;
+  box-shadow: var(--shadow-pixel-sm);
+}
+
+.bts-map .leaflet-bar a,
+.bts-map .leaflet-touch .leaflet-bar a {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0;
+  border-bottom: 1px solid var(--color-ink);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-h3);
+  line-height: 2.75rem;
+  transition: background-color 150ms var(--ease-step), color 150ms var(--ease-step);
+}
+
+.bts-map .leaflet-bar a:last-child {
+  border-bottom: 0;
+}
+
+.bts-map .leaflet-bar a:hover,
+.bts-map .leaflet-bar a:focus-visible {
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.bts-map .leaflet-bar a:focus-visible {
+  outline: 2px solid var(--color-cinnabar-deep);
+  outline-offset: 2px;
+}
+
+.bts-map .leaflet-bar a.leaflet-disabled {
+  background: var(--color-mist);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.bts-map .leaflet-top.leaflet-left .leaflet-control {
+  margin-top: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+/* Credits the tile providers require: always visible, readable, never blurred. */
+.bts-map .leaflet-container .leaflet-control-attribution {
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-ink);
+  border-left: 1px solid var(--color-ink);
+  box-shadow: none;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+}
+
+.bts-map .leaflet-control-attribution a {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.bts-map .leaflet-control-attribution a:hover,
+.bts-map .leaflet-control-attribution a:focus-visible {
+  color: var(--color-cinnabar-deep);
+}
+
+/* Size labels pinned to the shapes. */
+.bts-map .leaflet-tooltip.bts-map-label {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 0;
+  background: var(--color-ink);
+  box-shadow: none;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  line-height: var(--text-label--line-height);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bts-map .leaflet-tooltip.bts-map-label::before {
+  border-top-color: var(--color-ink);
+}
+
+/* The area that will be analysed. The hard shadow keeps it visible on light tiles. */
+.bts-map .bts-area {
+  stroke: var(--color-cinnabar);
+  stroke-width: 3;
+  stroke-opacity: 1;
+  stroke-linejoin: miter;
+  fill: var(--color-cinnabar);
+  fill-opacity: 0.2;
+  filter: drop-shadow(2px 2px 0 var(--color-ink));
+}
+
+/* An outline still being drawn. */
+.bts-map .bts-area--open {
+  stroke-dasharray: 8 6;
+  fill-opacity: 0.1;
+}
+
+/* The area of the analysis on screen, once the selection has moved on. */
+.bts-map .bts-analysed {
+  stroke: var(--color-white);
+  stroke-width: 2;
+  stroke-opacity: 1;
+  stroke-dasharray: 4 6;
+  fill: none;
+  filter: drop-shadow(1px 1px 0 var(--color-ink));
+}
+
+/* Markers are plain boxes: Leaflet centres them, the inner span is what shows. */
+.bts-map .bts-point,
+.bts-map .bts-vertex {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+}
+
+.bts-map .bts-point span {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--color-ink);
+  background: var(--color-cinnabar);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.bts-map .bts-point--reference span {
+  background: var(--color-white);
+  box-shadow: none;
+}
+
+.bts-map .bts-vertex span {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 2px solid var(--color-ink);
+  background: var(--color-white);
+}
+
+/* The first corner closes the outline: a 44px target around a filled square. */
+.bts-map .bts-vertex--first {
+  cursor: pointer;
+}
+
+.bts-map .bts-vertex--first span {
+  width: 1.25rem;
+  height: 1.25rem;
+  background: var(--color-cinnabar);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.bts-map .bts-vertex--first:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: -4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bts-map .leaflet-bar a,
+  .bts-map .leaflet-fade-anim .leaflet-tile,
+  .bts-map .leaflet-fade-anim .leaflet-popup,
+  .bts-map .leaflet-zoom-anim .leaflet-zoom-animated {
+    transition: none;
+  }
+}

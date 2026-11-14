@@ -1,0 +1,21 @@
+/* A block cursor that blinks in steps after the status line, like text being written. */
+.ai-thinking__cursor {
+  animation: ai-thinking-blink 1s steps(1, end) infinite;
+}
+
+@keyframes ai-thinking-blink {
+  0% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-thinking__cursor {
+    animation: none;
+  }
+}

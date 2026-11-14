@@ -1,9 +1,12 @@
 /**
- * Link to the working prototype. While it is `null` the landing page says the
- * demo is still being built instead of showing a button that leads nowhere.
- * Set it to the app URL (for example "/app") once the prototype is deployed.
+ * Link to the working prototype in each language. While it is `null` the landing
+ * page says the demo is still being built instead of showing a button that leads
+ * nowhere.
  */
-export const DEMO_URL: string | null = null;
+export const DEMO_URL: Readonly<Record<Locale, string>> | null = {
+  es: "/app",
+  en: "/en/app",
+};
 
 /** Anchor ids shared by both languages, so links keep working when switching. */
 export const SECTION_ID = {

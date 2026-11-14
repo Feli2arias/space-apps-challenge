@@ -45,7 +45,7 @@ export function DemoCta({ dict }: DemoCtaProps) {
 
           <div className="mt-8">
             {DEMO_URL ? (
-              <PixelLink href={DEMO_URL} variant="ink" withArrow>
+              <PixelLink href={DEMO_URL[dict.locale]} variant="ink" withArrow>
                 {demo.openCta}
               </PixelLink>
             ) : (

@@ -32,7 +32,7 @@ export const es: Dictionary = {
   },
   sources: {
     label: "Con datos de",
-    items: ["Sentinel-2", "SRTM", "CHIRPS", "GPM IMERG", "SoilGrids", "NASA POWER"],
+    items: ["Landsat 8/9", "SRTM", "GPM IMERG", "SoilGrids", "NASA POWER"],
   },
   stats: {
     ariaLabel: "En resumen",
@@ -46,7 +46,7 @@ export const es: Dictionary = {
         label: "rotaciones lado a lado, incluida la que ya se usa",
       },
       {
-        value: "10 m",
+        value: "30 m",
         label: "mide el píxel con que el satélite ve la cobertura de cada parcela",
       },
       {
@@ -233,9 +233,9 @@ export const es: Dictionary = {
     resolutionLabel: "Tamaño del píxel",
     rows: [
       {
-        resolution: "10 m",
+        resolution: "30 m",
         what: "Cobertura y suelo descubierto",
-        source: "Sentinel-2 · ESA Copernicus",
+        source: "Landsat 8/9 · NASA y USGS",
         scope: "Por parcela",
         limit:
           "De julio a noviembre las nubes dejan pocas imágenes útiles. Esas fechas las completa el productor.",
@@ -255,9 +255,9 @@ export const es: Dictionary = {
         limit: "Es una estimación. Un análisis de suelo propio pesa más.",
       },
       {
-        resolution: "5–10 km",
+        resolution: "11 km",
         what: "Lluvia por mes y por año",
-        source: "CHIRPS · GPM IMERG (NASA)",
+        source: "GPM IMERG · NASA",
         scope: "Por zona",
         limit: "Describe la zona, no la parcela.",
       },

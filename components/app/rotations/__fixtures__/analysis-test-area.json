@@ -1,0 +1,601 @@
+{
+ "note": "Trimmed from a real POST /api/analysis answer for the test area (200 m square at 10.95, -84.72, 3 years), captured 2026-11-14. Only the fields the rotation explorer reads are kept.",
+ "sources": {
+  "rain": {
+   "status": "ok",
+   "data": {
+    "climatology": [
+     {
+      "month": 1,
+      "meanMm": 56,
+      "minMm": 2.8,
+      "maxMm": 132.9,
+      "years": 3
+     },
+     {
+      "month": 2,
+      "meanMm": 16.9,
+      "minMm": 0,
+      "maxMm": 50.2,
+      "years": 3
+     },
+     {
+      "month": 3,
+      "meanMm": 72.4,
+      "minMm": 3,
+      "maxMm": 175.3,
+      "years": 3
+     },
+     {
+      "month": 4,
+      "meanMm": 22.3,
+      "minMm": 0.9,
+      "maxMm": 54.7,
+      "years": 3
+     },
+     {
+      "month": 5,
+      "meanMm": 147.3,
+      "minMm": 59.4,
+      "maxMm": 235.1,
+      "years": 2
+     },
+     {
+      "month": 6,
+      "meanMm": 390.7,
+      "minMm": 246.7,
+      "maxMm": 581.5,
+      "years": 3
+     },
+     {
+      "month": 7,
+      "meanMm": 422.2,
+      "minMm": 335.4,
+      "maxMm": 581,
+      "years": 3
+     },
+     {
+      "month": 8,
+      "meanMm": 289.7,
+      "minMm": 214.5,
+      "maxMm": 370.4,
+      "years": 3
+     },
+     {
+      "month": 9,
+      "meanMm": 265.7,
+      "minMm": 193.4,
+      "maxMm": 336.4,
+      "years": 3
+     },
+     {
+      "month": 10,
+      "meanMm": 311.1,
+      "minMm": 277.5,
+      "maxMm": 344.2,
+      "years": 3
+     },
+     {
+      "month": 11,
+      "meanMm": 299.8,
+      "minMm": 188.6,
+      "maxMm": 365.6,
+      "years": 3
+     },
+     {
+      "month": 12,
+      "meanMm": 134,
+      "minMm": 65.6,
+      "maxMm": 267.4,
+      "years": 3
+     }
+    ],
+    "monthly": [],
+    "annual": []
+   }
+  },
+  "vegetation": {
+   "status": "ok",
+   "data": {
+    "lowVegetationThreshold": 0.2,
+    "minClearFraction": 0.75,
+    "pixelsInArea": 43,
+    "monthly": [],
+    "observations": [
+     {
+      "date": "2023-02-27",
+      "sceneId": "LC09_L2SP_016052_20230227_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7453,
+      "ndviMin": 0.6265,
+      "ndviMax": 0.8428,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 32.21,
+      "usable": true
+     },
+     {
+      "date": "2023-03-23",
+      "sceneId": "LC08_L2SP_016052_20230323_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7566,
+      "ndviMin": 0.6384,
+      "ndviMax": 0.8721,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 40.02,
+      "usable": true
+     },
+     {
+      "date": "2023-04-09",
+      "sceneId": "LC09_L2SP_015052_20230409_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7561,
+      "ndviMin": 0.6205,
+      "ndviMax": 0.8856,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 23.88,
+      "usable": true
+     },
+     {
+      "date": "2023-04-24",
+      "sceneId": "LC08_L2SP_016052_20230424_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7405,
+      "ndviMin": 0.6106,
+      "ndviMax": 0.866,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 5.03,
+      "usable": true
+     },
+     {
+      "date": "2023-04-25",
+      "sceneId": "LC09_L2SP_015052_20230425_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7483,
+      "ndviMin": 0.6342,
+      "ndviMax": 0.841,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 18.35,
+      "usable": true
+     },
+     {
+      "date": "2023-05-27",
+      "sceneId": "LC09_L2SP_015053_20230527_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7576,
+      "ndviMin": 0.5351,
+      "ndviMax": 0.89,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 58.72,
+      "usable": true
+     },
+     {
+      "date": "2023-06-03",
+      "sceneId": "LC09_L2SP_016052_20230603_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7241,
+      "ndviMin": 0.5198,
+      "ndviMax": 0.8624,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 25.26,
+      "usable": true
+     },
+     {
+      "date": "2023-06-11",
+      "sceneId": "LC08_L2SP_016052_20230611_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7116,
+      "ndviMin": 0.6038,
+      "ndviMax": 0.839,
+      "clearPixels": 41,
+      "totalPixels": 43,
+      "sceneCloudCover": 16.3,
+      "usable": true
+     },
+     {
+      "date": "2023-06-20",
+      "sceneId": "LC08_L2SP_015053_20230620_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.822,
+      "ndviMin": 0.6522,
+      "ndviMax": 0.9931,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 54.82,
+      "usable": true
+     },
+     {
+      "date": "2023-07-05",
+      "sceneId": "LC09_L2SP_016052_20230705_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7783,
+      "ndviMin": 0.5275,
+      "ndviMax": 0.855,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 43.89,
+      "usable": true
+     },
+     {
+      "date": "2023-07-13",
+      "sceneId": "LC08_L2SP_016052_20230713_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.8125,
+      "ndviMin": 0.7477,
+      "ndviMax": 0.8645,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 64.17,
+      "usable": true
+     },
+     {
+      "date": "2023-07-29",
+      "sceneId": "LC08_L2SP_016052_20230729_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.8459,
+      "ndviMin": 0.7722,
+      "ndviMax": 0.8772,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 52.71,
+      "usable": true
+     },
+     {
+      "date": "2023-08-14",
+      "sceneId": "LC08_L2SP_016052_20230814_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.6816,
+      "ndviMin": 0.5316,
+      "ndviMax": 0.8897,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 35.37,
+      "usable": true
+     },
+     {
+      "date": "2023-09-07",
+      "sceneId": "LC09_L2SP_016052_20230907_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8114,
+      "ndviMin": 0.7396,
+      "ndviMax": 0.8653,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 50.8,
+      "usable": true
+     },
+     {
+      "date": "2023-10-02",
+      "sceneId": "LC09_L2SP_015052_20231002_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8168,
+      "ndviMin": 0.6405,
+      "ndviMax": 0.9201,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 74.42,
+      "usable": true
+     },
+     {
+      "date": "2023-10-26",
+      "sceneId": "LC08_L2SP_015052_20231026_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7695,
+      "ndviMin": 0.5859,
+      "ndviMax": 0.8967,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 83.39,
+      "usable": true
+     },
+     {
+      "date": "2023-12-21",
+      "sceneId": "LC09_L2SP_015052_20231221_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.816,
+      "ndviMin": 0.7335,
+      "ndviMax": 0.8936,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 24.22,
+      "usable": true
+     },
+     {
+      "date": "2024-01-13",
+      "sceneId": "LC09_L2SP_016052_20240113_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8139,
+      "ndviMin": 0.7138,
+      "ndviMax": 0.8839,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 35.94,
+      "usable": true
+     },
+     {
+      "date": "2024-01-21",
+      "sceneId": "LC08_L2SP_016052_20240121_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.721,
+      "ndviMin": 0.5595,
+      "ndviMax": 0.8697,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 41.18,
+      "usable": true
+     },
+     {
+      "date": "2024-01-30",
+      "sceneId": "LC08_L2SP_015053_20240130_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.804,
+      "ndviMin": 0.6504,
+      "ndviMax": 0.9313,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 28.19,
+      "usable": true
+     },
+     {
+      "date": "2024-02-14",
+      "sceneId": "LC09_L2SP_016052_20240214_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.6395,
+      "ndviMin": 0.4289,
+      "ndviMax": 0.8213,
+      "clearPixels": 39,
+      "totalPixels": 43,
+      "sceneCloudCover": 22.95,
+      "usable": true
+     },
+     {
+      "date": "2024-02-15",
+      "sceneId": "LC08_L2SP_015052_20240215_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7446,
+      "ndviMin": 0.62,
+      "ndviMax": 0.8603,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 54.69,
+      "usable": true
+     },
+     {
+      "date": "2024-03-25",
+      "sceneId": "LC08_L2SP_016052_20240325_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7294,
+      "ndviMin": 0.5671,
+      "ndviMax": 0.8501,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 8.81,
+      "usable": true
+     },
+     {
+      "date": "2024-03-26",
+      "sceneId": "LC09_L2SP_015052_20240326_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7251,
+      "ndviMin": 0.5575,
+      "ndviMax": 0.8541,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 44,
+      "usable": true
+     },
+     {
+      "date": "2024-04-03",
+      "sceneId": "LC08_L2SP_015052_20240403_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.707,
+      "ndviMin": 0.5096,
+      "ndviMax": 0.8506,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 15.24,
+      "usable": true
+     },
+     {
+      "date": "2024-04-11",
+      "sceneId": "LC09_L2SP_015053_20240411_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7069,
+      "ndviMin": 0.5682,
+      "ndviMax": 0.8728,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 42.94,
+      "usable": true
+     },
+     {
+      "date": "2024-05-05",
+      "sceneId": "LC08_L2SP_015052_20240505_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.749,
+      "ndviMin": 0.5762,
+      "ndviMax": 0.8908,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 34.97,
+      "usable": true
+     },
+     {
+      "date": "2024-06-06",
+      "sceneId": "LC08_L2SP_015052_20240606_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7572,
+      "ndviMin": 0.5264,
+      "ndviMax": 0.8497,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 63.3,
+      "usable": true
+     },
+     {
+      "date": "2024-06-30",
+      "sceneId": "LC09_L2SP_015052_20240630_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8424,
+      "ndviMin": 0.7525,
+      "ndviMax": 0.9012,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 39.66,
+      "usable": true
+     },
+     {
+      "date": "2024-09-01",
+      "sceneId": "LC08_L2SP_016052_20240901_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.824,
+      "ndviMin": 0.7406,
+      "ndviMax": 0.8971,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 60.33,
+      "usable": true
+     },
+     {
+      "date": "2024-10-04",
+      "sceneId": "LC09_L2SP_015053_20241004_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8401,
+      "ndviMin": 0.7402,
+      "ndviMax": 0.9654,
+      "clearPixels": 34,
+      "totalPixels": 43,
+      "sceneCloudCover": 38.69,
+      "usable": true
+     },
+     {
+      "date": "2024-11-05",
+      "sceneId": "LC09_L2SP_015052_20241105_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8309,
+      "ndviMin": 0.7702,
+      "ndviMax": 0.8933,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 14.79,
+      "usable": true
+     },
+     {
+      "date": "2025-03-12",
+      "sceneId": "LC08_L2SP_016052_20250312_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.716,
+      "ndviMin": 0.5094,
+      "ndviMax": 0.8868,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 24.1,
+      "usable": true
+     },
+     {
+      "date": "2025-03-21",
+      "sceneId": "LC08_L2SP_015053_20250321_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.6953,
+      "ndviMin": 0.5031,
+      "ndviMax": 0.889,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 46.34,
+      "usable": true
+     },
+     {
+      "date": "2025-04-13",
+      "sceneId": "LC08_L2SP_016052_20250413_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.7297,
+      "ndviMin": 0.5407,
+      "ndviMax": 0.8839,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 7.25,
+      "usable": true
+     },
+     {
+      "date": "2025-04-22",
+      "sceneId": "LC08_L2SP_015053_20250422_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.6272,
+      "ndviMin": 0.4572,
+      "ndviMax": 0.84,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 72.6,
+      "usable": true
+     },
+     {
+      "date": "2025-09-29",
+      "sceneId": "LC08_L2SP_015052_20250929_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.8013,
+      "ndviMin": 0.7061,
+      "ndviMax": 0.8783,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 51.31,
+      "usable": true
+     },
+     {
+      "date": "2025-10-14",
+      "sceneId": "LC09_L2SP_016052_20251014_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.7807,
+      "ndviMin": 0.6667,
+      "ndviMax": 0.8504,
+      "clearPixels": 43,
+      "totalPixels": 43,
+      "sceneCloudCover": 66.91,
+      "usable": true
+     },
+     {
+      "date": "2025-11-16",
+      "sceneId": "LC08_L2SP_015052_20251116_02_T1",
+      "platform": "landsat-8",
+      "ndviMean": 0.8374,
+      "ndviMin": 0.7758,
+      "ndviMax": 0.8866,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 54.45,
+      "usable": true
+     },
+     {
+      "date": "2025-11-24",
+      "sceneId": "LC09_L2SP_015052_20251124_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8122,
+      "ndviMin": 0.7459,
+      "ndviMax": 0.8772,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 49.39,
+      "usable": true
+     },
+     {
+      "date": "2025-12-10",
+      "sceneId": "LC09_L2SP_015052_20251210_02_T1",
+      "platform": "landsat-9",
+      "ndviMean": 0.8336,
+      "ndviMin": 0.7547,
+      "ndviMax": 0.8988,
+      "clearPixels": 49,
+      "totalPixels": 49,
+      "sceneCloudCover": 55.99,
+      "usable": true
+     }
+    ]
+   }
+  }
+ }
+}

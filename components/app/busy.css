@@ -1,0 +1,26 @@
+/*
+ * A two-frame blink for "work in progress" marks: the icon beside a source that
+ * is being queried, in the loader and on the retry button. With reduced motion
+ * the mark stays still; the word next to it already says what is happening.
+ *
+ * A plain stylesheet with a hand-prefixed name: this project treats every
+ * *.css file as global CSS, so CSS modules are not available.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-busy-blink {
+    animation: app-busy-blink 1s steps(1, end) infinite;
+  }
+}
+
+@keyframes app-busy-blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}

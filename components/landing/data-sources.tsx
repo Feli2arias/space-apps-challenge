@@ -1,7 +1,7 @@
 // Contract: DataSources
 // Props: dict (Dictionary, required)
 // Variants: none
-// States: static
+// States: static. Its bottom edge dissolves into the next section with a dithered strip (PixelFade)
 // Accessibility: section labelled by its h2; sources are a list in which each row names what
 //                is measured, who measures it, at what pixel size and its limit; the
 //                "sees / does not see" panels are headed lists and their check and cross icons
@@ -13,6 +13,7 @@
 import { Container } from "@/components/ui/container";
 import { OriginTag } from "@/components/ui/origin-tag";
 import { PixelIcon } from "@/components/ui/pixel-icon";
+import { PixelFade } from "@/components/pixel/pixel-fade";
 import { SectionHeader } from "@/components/ui/section-header";
 import type { Dictionary, Origin } from "@/lib/i18n/types";
 import { SECTION_ID } from "@/lib/site";
@@ -31,7 +32,7 @@ export function DataSources({ dict }: DataSourcesProps) {
     <section
       id={SECTION_ID.data}
       aria-labelledby={TITLE_ID}
-      className="border-t border-line bg-white py-section"
+      className="relative border-t border-line bg-white py-section"
     >
       <Container>
         <SectionHeader
@@ -116,6 +117,7 @@ export function DataSources({ dict }: DataSourcesProps) {
           </dl>
         </div>
       </Container>
+      <PixelFade tone="white" className="z-10" />
     </section>
   );
 }

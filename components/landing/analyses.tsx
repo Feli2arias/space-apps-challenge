@@ -1,12 +1,13 @@
 // Contract: Analyses
 // Props: dict (Dictionary, required)
 // Variants: none
-// States: static
+// States: static. Its bottom edge dissolves into the next section with a dithered strip (PixelFade)
 // Accessibility: section labelled by its h2; each analysis is an article; every chart value
 //                is written as text and each chart states its source and origin; text on ink
 //                is 17:1 (white) and 9.5:1 (muted); chart panels are ink on white
 // Responsive: one column below lg (1024px), two columns from lg up
 
+import { PixelFade } from "@/components/pixel/pixel-fade";
 import { Container } from "@/components/ui/container";
 import { OriginTag } from "@/components/ui/origin-tag";
 import { PixelBars } from "@/components/ui/pixel-bars";
@@ -27,7 +28,7 @@ export function Analyses({ dict }: AnalysesProps) {
     <section
       id={SECTION_ID.analyses}
       aria-labelledby={TITLE_ID}
-      className="bg-ink py-section text-white"
+      className="relative bg-ink py-section text-white"
     >
       <Container>
         <SectionHeader
@@ -75,6 +76,7 @@ export function Analyses({ dict }: AnalysesProps) {
           ))}
         </div>
       </Container>
+      <PixelFade />
     </section>
   );
 }

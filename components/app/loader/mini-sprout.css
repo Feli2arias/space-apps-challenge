@@ -1,0 +1,93 @@
+/*
+ * Four small drawings shown one after another: seed, sprout, leaves, flower.
+ * Each one is simply switched on for its turn (only `opacity` changes, in
+ * steps), then the cycle starts again from the seed, so it never looks finished.
+ */
+.mini-sprout__frame {
+  opacity: 0;
+  animation-duration: 2.8s;
+  animation-timing-function: steps(1, end);
+  animation-iteration-count: infinite;
+}
+
+.mini-sprout__frame--seed {
+  animation-name: mini-sprout-seed;
+}
+
+.mini-sprout__frame--sprout {
+  animation-name: mini-sprout-sprout;
+}
+
+.mini-sprout__frame--leaves {
+  animation-name: mini-sprout-leaves;
+}
+
+.mini-sprout__frame--flower {
+  animation-name: mini-sprout-flower;
+}
+
+@keyframes mini-sprout-seed {
+  0% {
+    opacity: 1;
+  }
+
+  20%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mini-sprout-sprout {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  40%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mini-sprout-leaves {
+  0%,
+  20% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  60%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The flower stays a little longer than the other steps before the loop restarts. */
+@keyframes mini-sprout-flower {
+  0%,
+  40% {
+    opacity: 0;
+  }
+
+  60%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* With reduced motion only the grown flower is shown, still. */
+@media (prefers-reduced-motion: reduce) {
+  .mini-sprout__frame {
+    animation: none;
+  }
+
+  .mini-sprout__frame--flower {
+    opacity: 1;
+  }
+}

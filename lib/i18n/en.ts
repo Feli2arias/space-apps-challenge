@@ -32,7 +32,7 @@ export const en: Dictionary = {
   },
   sources: {
     label: "Built on data from",
-    items: ["Sentinel-2", "SRTM", "CHIRPS", "GPM IMERG", "SoilGrids", "NASA POWER"],
+    items: ["Landsat 8/9", "SRTM", "GPM IMERG", "SoilGrids", "NASA POWER"],
   },
   stats: {
     ariaLabel: "At a glance",
@@ -46,7 +46,7 @@ export const en: Dictionary = {
         label: "rotations side by side, including the one already in use",
       },
       {
-        value: "10 m",
+        value: "30 m",
         label: "is the pixel size the satellite uses to see ground cover on each plot",
       },
       {
@@ -233,9 +233,9 @@ export const en: Dictionary = {
     resolutionLabel: "Pixel size",
     rows: [
       {
-        resolution: "10 m",
+        resolution: "30 m",
         what: "Ground cover and bare soil",
-        source: "Sentinel-2 · ESA Copernicus",
+        source: "Landsat 8/9 · NASA and USGS",
         scope: "Per plot",
         limit:
           "From July to November clouds leave few usable images. The farmer fills in those dates.",
@@ -255,9 +255,9 @@ export const en: Dictionary = {
         limit: "It is an estimate. A soil test of your own carries more weight.",
       },
       {
-        resolution: "5–10 km",
+        resolution: "11 km",
         what: "Rainfall by month and by year",
-        source: "CHIRPS · GPM IMERG (NASA)",
+        source: "GPM IMERG · NASA",
         scope: "Per area",
         limit: "Describes the area, not the plot.",
       },
