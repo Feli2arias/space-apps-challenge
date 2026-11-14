@@ -1,7 +1,9 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { getCache } from "@vercel/functions";
 import path from "node:path";
+import { SharedCache } from "./shared-cache";
 
 /**
  * Cache for source results, so the same place, period and product are not
@@ -183,10 +185,15 @@ function writableDirectory(): string {
 
 let sharedCache: CacheStore | null = null;
 
-/** The cache used by the API. Created once per server process. */
+/**
+ * The cache used by the API. Created once per server process. On Vercel each
+ * route may run in its own instance, so a layer shared by all of them (the
+ * platform's Runtime Cache) is added after the local ones.
+ */
 export function getAnalysisCache(): CacheStore {
   sharedCache ??= new LayeredCache(new MemoryCache(), [
     new FileCache(writableDirectory()),
+    ...(process.env.VERCEL ? [new SharedCache(() => getCache({ namespace: "before-the-seed" }))] : []),
     new FileCache(SEED_DIRECTORY, { readOnly: true }),
   ]);
   return sharedCache;

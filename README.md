@@ -2,8 +2,8 @@
 
 Proyecto para el NASA Space Apps Challenge 2026 (reto Field Shift: Adapting Farms with NASA Data).
 
-- **Landing:** español en `/`, inglés en `/en`.
-- **App:** `/app` y `/en/app`. Se elige un terreno en el mapa, se analiza con datos abiertos de observación de la Tierra y se comparan tres rotaciones.
+- **Landing:** inglés en `/` (idioma por defecto), español en `/es`.
+- **App:** `/app` (inglés) y `/es/app` (español). Se elige un terreno en el mapa, se analiza con datos abiertos de observación de la Tierra y se comparan tres rotaciones.
 - Next.js (App Router) + Tailwind CSS v4. Sin base de datos ni cuentas.
 
 ## Cómo correrlo

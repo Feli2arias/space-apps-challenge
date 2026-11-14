@@ -4,8 +4,8 @@
  * nowhere.
  */
 export const DEMO_URL: Readonly<Record<Locale, string>> | null = {
-  es: "/app",
-  en: "/en/app",
+  es: "/es/app",
+  en: "/app",
 };
 
 /** Anchor ids shared by both languages, so links keep working when switching. */
@@ -22,9 +22,10 @@ export const SECTION_ID = {
 
 export type SectionKey = keyof typeof SECTION_ID;
 
+/** English is the default language and lives at the root; Spanish lives under /es. */
 export const LOCALE_PATH = {
-  es: "/",
-  en: "/en",
+  es: "/es",
+  en: "/",
 } as const;
 
 export type Locale = keyof typeof LOCALE_PATH;

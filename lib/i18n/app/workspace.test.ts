@@ -64,7 +64,8 @@ describe("workspace dictionary", () => {
   });
 
   it("lives under each language's home page", () => {
-    expect(APP_PATH.es).toBe("/app");
-    expect(APP_PATH.en).toBe(`${LOCALE_PATH.en}/app`);
+    // English is the default language, at the root; Spanish lives under /es.
+    expect(APP_PATH.en).toBe("/app");
+    expect(APP_PATH.es).toBe(`${LOCALE_PATH.es}/app`);
   });
 });

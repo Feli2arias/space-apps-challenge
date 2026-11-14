@@ -21,7 +21,7 @@ export function createMetadata(dict: Dictionary): Metadata {
       languages: {
         es: absolute("es"),
         en: absolute("en"),
-        "x-default": absolute("es"),
+        "x-default": absolute("en"),
       },
     },
     openGraph: {

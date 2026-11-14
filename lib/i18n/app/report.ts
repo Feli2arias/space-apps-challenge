@@ -82,6 +82,11 @@ export interface ReportDictionary {
     /** {coordinates} */
     readonly backNote: string;
     readonly missing: string;
+    /** What the small button of the box does, when it is open and when it is closed. */
+    readonly collapse: string;
+    readonly expand: string;
+    /** Written on the button when the box is closed. */
+    readonly expandShort: string;
   };
 }
 
@@ -187,6 +192,9 @@ const es: ReportDictionary = {
     backToResults: "Volver a los resultados",
     backNote: "Tienes resultados de {coordinates}. Elige otro lugar o vuelve a ellos.",
     missing: "Falta",
+    collapse: "Ocultar los datos del terreno",
+    expand: "Mostrar los datos del terreno",
+    expandShort: "Mostrar",
   },
 };
 
@@ -292,6 +300,9 @@ const en: ReportDictionary = {
     backToResults: "Back to the results",
     backNote: "You have results for {coordinates}. Choose another place or go back to them.",
     missing: "Missing",
+    collapse: "Hide the plot details",
+    expand: "Show the plot details",
+    expandShort: "Show",
   },
 };
 

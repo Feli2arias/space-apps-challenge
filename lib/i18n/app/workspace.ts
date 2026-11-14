@@ -15,8 +15,8 @@ import type { Locale } from "@/lib/site";
 
 /** Address of this screen in each language. */
 export const APP_PATH: Readonly<Record<Locale, string>> = {
-  es: "/app",
-  en: "/en/app",
+  es: "/es/app",
+  en: "/app",
 };
 
 export interface WorkspaceDictionary {

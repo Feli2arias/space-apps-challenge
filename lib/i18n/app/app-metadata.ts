@@ -10,7 +10,7 @@ const OPEN_GRAPH_LOCALE: Readonly<Record<Locale, string>> = {
 /**
  * Metadata of the analysis screen in one language. It replaces the title,
  * description and language links the root layout sets for the landing page,
- * so search engines pair /app with /en/app and not with the home pages.
+ * so search engines pair /app with /es/app and not with the home pages.
  */
 export function createAppMetadata(locale: Locale): Metadata {
   const { meta } = getWorkspaceDictionary(locale);
@@ -25,7 +25,7 @@ export function createAppMetadata(locale: Locale): Metadata {
       languages: {
         es: absolute("es"),
         en: absolute("en"),
-        "x-default": absolute("es"),
+        "x-default": absolute("en"),
       },
     },
     openGraph: {

@@ -9,17 +9,20 @@
 //        actions (ReactNode, optional) — "Ver mapa" and "Analizar otro terreno"
 //        dict (ResultsDictionary, required), report (ReportDictionary, required)
 // Variants: none
-// States: place loading or failed (coordinates only, nothing blocks) | place found
+// States: open (default) | closed (a single line with the title and the place, so the
+//         dashboard gets the height back; a small button opens it again) |
+//         place loading or failed (coordinates only, nothing blocks) | place found
 //         ("Los Chiles, Alajuela, Costa Rica" with the OpenStreetMap attribution) | no known
 //         place (open sea: coordinates only) | complete | partial / failed (a "Falta" line
 //         naming each missing source and why)
 // Accessibility: the h2 takes focus programmatically; the status is a word; the place name
-//                arrives silently (it is not announced, it only adds context)
+//                arrives silently (it is not announced, it only adds context); the button
+//                that closes and opens the box says what it does and carries aria-expanded
 // Responsive: the workspace keeps it at the top while the tabs scroll below it; facts wrap;
 //             the actions sit beside the facts from @3xl and below them on narrow panels;
 //             content is centred at most 64rem wide
 
-import type { ReactNode, Ref } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode, type Ref } from "react";
 import { PixelIcon } from "@/components/ui/pixel-icon";
 import type { PixelIconName } from "@/components/ui/pixel-icons";
 import { formatCoordinate, formatDateRange, formatDistance, formatValueWithUnit } from "@/lib/analysis/format";
@@ -66,6 +69,16 @@ function areaWords(analysis: Analysis, dict: ResultsDictionary, report: ReportDi
 
 export function ScannedPlot({ analysis, sourceTitles, titleId, headingRef, actions, dict, report }: ScannedPlotProps) {
   const { locale } = dict;
+  const detailsId = useId();
+  const [open, setOpen] = useState(true);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const toggled = useRef(false);
+
+  // The button is drawn in another place in each state, so the keyboard focus is handed
+  // to the new one after a press instead of being lost.
+  useEffect(() => {
+    if (toggled.current) toggleRef.current?.focus();
+  }, [open]);
   const center = analysis.area?.center;
   const place = useReversePlace(center?.lat, center?.lon, locale);
   const placeName = place.status === "done" ? placeLine(place.place) : null;
@@ -86,19 +99,56 @@ export function ScannedPlot({ analysis, sourceTitles, titleId, headingRef, actio
     ...summary.noData.map((id) => fill(dict.header.missingNoData, { source: sourceTitles[id] })),
   ];
 
+  const toggle = (
+    <button
+      ref={toggleRef}
+      type="button"
+      aria-expanded={open}
+      aria-controls={detailsId}
+      title={open ? report.plot.collapse : report.plot.expand}
+      onClick={() => {
+        toggled.current = true;
+        setOpen((current) => !current);
+      }}
+      className="inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 border border-line bg-white px-3 font-mono text-label tracking-label uppercase hover:border-ink"
+    >
+      <span className={open ? "sr-only" : undefined}>{open ? report.plot.collapse : report.plot.expandShort}</span>
+      <PixelIcon name="arrow" className={cn("size-3", open ? "-rotate-90" : "rotate-90")} />
+    </button>
+  );
+
+  const title = (
+    <h2
+      id={titleId}
+      ref={headingRef}
+      tabIndex={-1}
+      className="shrink-0 font-mono text-label font-semibold tracking-label text-cinnabar-deep uppercase"
+    >
+      {report.plot.title}
+    </h2>
+  );
+
+  if (!open) {
+    return (
+      <header className="shrink-0 border-b border-ink bg-white">
+        <div id={detailsId} className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-1.5 @xl:px-6">
+          {title}
+          <p className="min-w-0 flex-1 truncate font-mono text-small text-muted">{placeName ?? coordinates}</p>
+          {toggle}
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="shrink-0 border-b border-ink bg-white">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 @xl:px-6 @xl:py-4 @3xl:flex-row @3xl:items-end @3xl:justify-between @3xl:gap-8">
+      <div
+        id={detailsId}
+        className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 @xl:px-6 @xl:py-4 @3xl:flex-row @3xl:items-end @3xl:justify-between @3xl:gap-8"
+      >
         <div className="flex min-w-0 flex-col gap-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <h2
-              id={titleId}
-              ref={headingRef}
-              tabIndex={-1}
-              className="font-mono text-label font-semibold tracking-label text-cinnabar-deep uppercase"
-            >
-              {report.plot.title}
-            </h2>
+            {title}
             <span
               className={cn(
                 "inline-flex items-center gap-1.5 border px-1.5 py-0.5 font-mono text-label tracking-label uppercase",
@@ -141,7 +191,10 @@ export function ScannedPlot({ analysis, sourceTitles, titleId, headingRef, actio
           ) : null}
         </div>
 
-        {actions ? <div className="flex shrink-0 flex-wrap gap-2">{actions}</div> : null}
+        <div className="flex shrink-0 flex-wrap items-start gap-2">
+          {actions}
+          {toggle}
+        </div>
       </div>
     </header>
   );
