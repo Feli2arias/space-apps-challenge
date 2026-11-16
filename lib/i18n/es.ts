@@ -5,7 +5,7 @@ export const es: Dictionary = {
   meta: {
     title: "Before the Seed | Antes de la semilla, conoce la tierra",
     description:
-      "Compara terrenos antes de alquilar o comprar y rotaciones antes de sembrar, con datos de observación de la Tierra y evidencia agronómica. Proyecto del NASA Space Apps Challenge 2026.",
+      "Conoce un terreno antes de alquilarlo o comprarlo y compara rotaciones antes de sembrar, con datos de observación de la Tierra y evidencia agronómica. Proyecto del NASA Space Apps Challenge 2026.",
   },
   skipToContent: "Saltar al contenido",
   nav: {
@@ -25,7 +25,7 @@ export const es: Dictionary = {
   hero: {
     titleLines: ["Antes de", "la semilla,"],
     titleHighlight: "conoce la tierra",
-    lead: "Escribe unas coordenadas y mira la lluvia, la pendiente y el historial que se ve desde el espacio. Compara terrenos antes de alquilar y rotaciones antes de sembrar.",
+    lead: "Escribe unas coordenadas y mira la lluvia, la pendiente y el historial que se ve desde el espacio. Conoce el terreno antes de alquilar y compara rotaciones antes de sembrar.",
     primaryCta: "Ver cómo funciona",
     secondaryCta: "Las tres rotaciones",
     note: "NASA Space Apps 2026 · Reto Field Shift · Piloto en Costa Rica",
@@ -124,8 +124,8 @@ export const es: Dictionary = {
         body: "Lluvia, pendiente, cobertura y suelo. Cada dato con su fuente, su período, su resolución y lo que falta.",
       },
       {
-        title: "Compara terrenos",
-        body: "Dos o más terrenos bajo el mismo objetivo: ventajas, dificultades y lo que conviene verificar antes de firmar.",
+        title: "Pide recomendaciones",
+        body: "Recomendaciones escritas con los datos del propio terreno, cada una con su porqué. Haz preguntas y descarga la ficha en PDF.",
       },
       {
         title: "Compara rotaciones",
@@ -292,16 +292,16 @@ export const es: Dictionary = {
     originsTitle: "Cuatro orígenes, siempre a la vista",
   },
   demo: {
-    title: ["Dos terrenos,", "una decisión"],
-    lead: "La demo cuenta una historia concreta: un productor quiere sembrar frijol y duda entre dos terrenos en alquiler.",
+    title: ["Un terreno,", "una decisión"],
+    lead: "La demo cuenta una historia concreta: un productor quiere sembrar frijol y evalúa un terreno en alquiler.",
     scope:
       "El prototipo analiza parcelas piloto en Costa Rica. El motor está pensado para cualquier lugar donde haya cobertura de datos.",
     windowTitle: "La demo · paso a paso",
     steps: [
       "Escribe las coordenadas del primer terreno",
       "Confirma el área y lee su ficha",
-      "Agrega el segundo terreno y compara",
-      "Elige uno y cuenta qué se sembró antes",
+      "Pide recomendaciones y descarga el PDF",
+      "Cuenta qué se sembró antes",
       "Compara tres rotaciones y lo que falta verificar",
     ],
     openCta: "Abrir la demo",

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createRateLimiter } from "@/lib/analysis/rate-limit";
 import type { Advice } from "@/lib/explain/advice";
 import { checkAnswer, MAX_HISTORY_TURNS, MAX_QUESTION_LENGTH, type ChatAnswer } from "@/lib/explain/chat";
-import type { ChatMessage } from "@/lib/explain/deepseek";
+import type { ChatMessage } from "@/lib/explain/claude";
 import { generateChecked } from "@/lib/explain/generate";
 import { chatPrompt, factsMessage } from "@/lib/explain/prompts";
 import {

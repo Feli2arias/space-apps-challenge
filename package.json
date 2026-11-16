@@ -1,6 +1,8 @@
 {
   "name": "before-the-seed",
   "version": "0.1.0",
+  "description": "Before the Seed: know a plot from open Earth observation data before renting, buying or planting. NASA Space Apps Challenge 2026. Code written with SI (AI) assistance; see the README.",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,6 +24,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.78.0",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/leaflet": "~1.9.22",
     "@types/node": "^20",

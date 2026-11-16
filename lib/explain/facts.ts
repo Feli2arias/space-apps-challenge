@@ -11,6 +11,7 @@ import {
   type Unit,
 } from "@/lib/analysis/types";
 import type { Locale } from "@/lib/site";
+import { extractNumbers } from "./grounding";
 
 /**
  * Turns an analysis into the short list of facts the language model is allowed
@@ -191,12 +192,33 @@ function numbersOf(results: SourceResults, area: AnalysisArea, period: DateRange
   ];
 }
 
+/**
+ * Numbers written inside the texts the model receives (a scope note that says
+ * "a square of about 10 km", the day of a date such as "22 abr 2025"). The
+ * model may repeat them, so they count as coming from the analysis too.
+ */
+function numbersInTexts(texts: readonly (string | null)[], locale: Locale): number[] {
+  return texts.flatMap((text) => (text === null ? [] : extractNumbers(text, locale).map((written) => written.value)));
+}
+
 export function buildFacts(
   results: SourceResults,
   area: AnalysisArea,
   period: DateRange,
   locale: Locale,
 ): AnalysisFacts {
+  const sources = SOURCE_IDS.map((source) => briefOf(source, results[source], locale));
+  const facts = SOURCE_IDS.flatMap((source) => factsOf(source, results[source], locale));
+  const monthly = monthlyOf(results, locale);
+  const written = numbersInTexts(
+    [
+      ...sources.flatMap((brief) => [brief.title, brief.scopeNote, ...brief.limitations]),
+      ...facts.flatMap((fact) => [fact.label, fact.value, fact.when]),
+      ...monthly.flatMap((series) => [series.label, ...series.months.map((month) => month.value)]),
+    ],
+    locale,
+  );
+
   return {
     area: {
       latitude: round(area.center.lat, COORDINATE_DECIMALS),
@@ -205,9 +227,9 @@ export function buildFacts(
       definedBy: area.kind,
     },
     period,
-    sources: SOURCE_IDS.map((source) => briefOf(source, results[source], locale)),
-    facts: SOURCE_IDS.flatMap((source) => factsOf(source, results[source], locale)),
-    monthly: monthlyOf(results, locale),
-    allowedNumbers: numbersOf(results, area, period),
+    sources,
+    facts,
+    monthly,
+    allowedNumbers: [...numbersOf(results, area, period), ...written],
   };
 }

@@ -63,6 +63,20 @@ describe("buildFacts", () => {
     expect(facts.allowedNumbers).toContain(111);
   });
 
+  it("allows the numbers written inside the texts the model receives", () => {
+    const dated = rainResult({
+      metrics: [
+        { id: "rain.annualMean", value: 2392.2, unit: "mm/year", aggregation: "mean" },
+        { id: "rain.wettestYear", value: 2648, unit: "mm/year", aggregation: "max", at: { year: 2025 } },
+      ],
+    });
+    const facts = buildFacts({ rain: dated }, area, period, "es");
+    // The scope note of the rain source speaks of a square of about 10 km.
+    const note = facts.sources.find((brief) => brief.source === "rain")?.scopeNote ?? "";
+    expect(note).toMatch(/10/);
+    expect(facts.allowedNumbers).toContain(10);
+  });
+
   it("gives no facts for a source that failed or is missing", () => {
     const failed = rainResult({ status: "error", scope: null, metrics: [], data: null });
     const facts = buildFacts({ rain: failed }, area, period, "en");

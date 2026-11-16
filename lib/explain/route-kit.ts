@@ -9,7 +9,7 @@ import { parseAnalysisRequest } from "@/lib/analysis/schema";
 import { SOURCES } from "@/lib/analysis/sources";
 import type { ApiError, ApiResponse } from "@/lib/analysis/types";
 import type { Locale } from "@/lib/site";
-import { adviceModel, isAdviceConfigured } from "./deepseek";
+import { adviceModel, isAdviceConfigured } from "./claude";
 import { buildFacts, type AnalysisFacts } from "./facts";
 import { PROMPT_VERSION } from "./prompts";
 

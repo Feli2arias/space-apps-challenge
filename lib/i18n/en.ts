@@ -5,7 +5,7 @@ export const en: Dictionary = {
   meta: {
     title: "Before the Seed | Before the seed, know the land",
     description:
-      "Compare plots before renting or buying, and crop rotations before planting, using Earth observation data and agronomic evidence. A NASA Space Apps Challenge 2026 project.",
+      "Know a plot before renting or buying it, and compare crop rotations before planting, using Earth observation data and agronomic evidence. A NASA Space Apps Challenge 2026 project.",
   },
   skipToContent: "Skip to content",
   nav: {
@@ -25,7 +25,7 @@ export const en: Dictionary = {
   hero: {
     titleLines: ["Before", "the seed,"],
     titleHighlight: "know the land",
-    lead: "Enter a pair of coordinates and see the rainfall, the slope and the history visible from space. Compare plots before you rent, and rotations before you plant.",
+    lead: "Enter a pair of coordinates and see the rainfall, the slope and the history visible from space. Know the plot before you rent, and compare rotations before you plant.",
     primaryCta: "See how it works",
     secondaryCta: "The three rotations",
     note: "NASA Space Apps 2026 · Field Shift challenge · Pilot in Costa Rica",
@@ -124,8 +124,8 @@ export const en: Dictionary = {
         body: "Rainfall, slope, ground cover and soil. Each figure with its source, period, resolution and what is missing.",
       },
       {
-        title: "Compare plots",
-        body: "Two or more plots under the same goal: advantages, difficulties and what to check before signing.",
+        title: "Ask for recommendations",
+        body: "Recommendations written from the plot's own figures, each with its reason. Ask questions and download the sheet as a PDF.",
       },
       {
         title: "Compare rotations",
@@ -292,16 +292,16 @@ export const en: Dictionary = {
     originsTitle: "Four origins, always in view",
   },
   demo: {
-    title: ["Two plots,", "one decision"],
-    lead: "The demo tells one concrete story: a farmer wants to plant beans and is choosing between two plots for rent.",
+    title: ["One plot,", "one decision"],
+    lead: "The demo tells one concrete story: a farmer wants to plant beans and is weighing a plot for rent.",
     scope:
       "The prototype analyzes pilot plots in Costa Rica. The engine is designed for anywhere the data covers.",
     windowTitle: "The demo · step by step",
     steps: [
       "Enter the coordinates of the first plot",
       "Confirm the area and read its sheet",
-      "Add the second plot and compare",
-      "Pick one and say what was grown before",
+      "Ask for recommendations and download the PDF",
+      "Say what was grown before",
       "Compare three rotations and what is left to verify",
     ],
     openCta: "Open the demo",

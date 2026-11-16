@@ -1,4 +1,4 @@
-import { askDeepSeek, type ChatMessage } from "./deepseek";
+import { askModel, type ChatMessage } from "./claude";
 import { correctionMessage } from "./prompts";
 import type { Checked } from "./grounded";
 
@@ -18,7 +18,7 @@ export async function generateChecked<T>(
 ): Promise<T | null> {
   let messages = conversation;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
-    const answer = await askDeepSeek(messages, signal);
+    const answer = await askModel(messages, signal);
     const result = check(answer);
     if (result.ok) return result.value;
     console.error(`[${label}] attempt ${attempt} discarded: ${result.problem}`);

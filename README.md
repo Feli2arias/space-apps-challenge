@@ -1,91 +1,117 @@
 # Before the Seed
 
-Proyecto para el NASA Space Apps Challenge 2026 (reto Field Shift: Adapting Farms with NASA Data).
+*Before the seed, know the land.*
 
-- **Landing:** inglés en `/` (idioma por defecto), español en `/es`.
-- **App:** `/app` (inglés) y `/es/app` (español). Se elige un terreno en el mapa, se analiza con datos abiertos de observación de la Tierra y se comparan tres rotaciones.
-- Next.js (App Router) + Tailwind CSS v4. Sin base de datos ni cuentas.
+A project for the NASA Space Apps Challenge 2026 (challenge "Field Shift: Adapting Farms with NASA Data"), San José, Costa Rica.
 
-## Cómo correrlo
+Live at **https://before-the-seed.vercel.app**
+
+- **Landing:** English at `/` (default language), Spanish at `/es`.
+- **App:** `/app` (English) and `/es/app` (Spanish). You mark a plot on the map, it is analysed with open Earth observation data, and you compare three crop rotations.
+- Next.js (App Router) + Tailwind CSS v4. No database and no accounts.
+
+## Running it
 
 ```bash
 pnpm install
 pnpm dev        # http://localhost:3000
 ```
 
-Otros comandos:
+Other commands:
 
 ```bash
-pnpm build      # build de producción
+pnpm build      # production build
 pnpm test       # tests (Vitest)
 pnpm lint       # ESLint
 pnpm typecheck  # TypeScript
 ```
 
-## Cómo funciona el análisis
+## How the analysis works
 
-1. La persona escribe coordenadas, busca una localidad o toca el mapa, y elige un cuadrado alrededor del punto o dibuja el contorno.
-2. `POST /api/analysis` valida el área y consulta cinco fuentes por separado. Responde en *streaming* (una línea JSON por evento), así la pantalla de carga muestra lo que el servidor ya confirmó.
-3. Cada resultado dice qué describe (la parcela, el píxel o la región), de qué producto y versión sale, cuándo se obtuvo y con qué límites. Si una fuente falla, las demás se muestran igual y esa se puede reintentar.
-4. Los resultados se guardan en caché por área, período y producto. Cuando un dato viene guardado, el panel lo dice y muestra la fecha en que se obtuvo.
+1. The person types coordinates, searches for a place or taps the map, and picks a square around the point or draws the outline.
+2. `POST /api/analysis` validates the area and queries five sources separately. It answers as a stream (one JSON line per event), so the loading screen shows what the server has already confirmed.
+3. Each result says what it describes (the plot, the pixel or the region), which product and version it comes from, when it was obtained and its limits. If one source fails, the others are still shown and that one can be retried.
+4. Results are cached by area, period and product. When a figure comes from the cache, the panel says so and shows the date it was obtained.
 
-### Fuentes conectadas (ninguna pide clave)
+### Connected sources (none needs a key)
 
-| Qué | Producto | Servicio | Píxel | Describe |
+| What | Product | Service | Pixel | Describes |
 |---|---|---|---|---|
-| Lluvia diaria | GPM IMERG Late Run V07 | SERVIR ClimateSERV | ~11 km | La región |
-| Verdor (NDVI) | Landsat 8/9 Collection 2 Level-2 | Microsoft Planetary Computer | 30 m | La parcela |
-| Elevación y pendiente | SRTM GL1 | Open Topo Data | 30 m | La parcela |
-| Suelo | SoilGrids 2.0 (ISRIC) | Servicio de mapas de ISRIC (WCS); la API REST de SoilGrids como respaldo | 250 m | La región |
-| Temperatura | NASA POWER (MERRA-2) | API de POWER | ~55 km | La región |
-| Buscador de lugares | OpenStreetMap | Nominatim | — | — |
+| Daily rainfall | GPM IMERG Late Run V07 (NASA) | SERVIR ClimateSERV | ~11 km | The region |
+| Greenness (NDVI) | Landsat 8/9 Collection 2 Level-2 (NASA/USGS) | Microsoft Planetary Computer | 30 m | The plot |
+| Elevation and slope | SRTM GL1 (NASA) | Open Topo Data | 30 m | The plot |
+| Soil | SoilGrids 2.0 (ISRIC) | ISRIC map service (WCS); the SoilGrids REST API as fallback | 250 m | The region |
+| Temperature | NASA POWER (MERRA-2) | POWER API | ~55 km | The region |
+| Place search | OpenStreetMap | Nominatim | — | — |
 
-Tiempos medidos el 14 de noviembre de 2026 en una parcela de Los Chiles: la lluvia tarda unos 60 s para 3 años y 75 s para 5 (el servicio procesa un año cada ~47 s); la vegetación, unos 25 s para 320 escenas; el resto, menos de 5 s. La segunda vez todo sale de la caché al instante.
+The map shows Sentinel-2 cloudless imagery by EOX and OpenStreetMap tiles. They are a backdrop: the figures come from the sources above, never from the picture on the map.
 
-### Otras rutas
+Times measured on 14 November 2026 on a plot in Los Chiles: rainfall takes about 60 s for 3 years and 75 s for 5 (the service processes one year every ~47 s); vegetation, about 25 s for 320 scenes; the rest, under 5 s. The second time everything comes from the cache at once.
 
-- `GET /api/geocode?q=…&lang=es` — busca localidades.
-- `GET /api/geocode/reverse?lat=…&lon=…&lang=es` — dice en palabras dónde cae un punto: localidad, región y país.
-- `POST /api/rotations` — compara rotaciones declaradas: evidencia publicada sobre el cultivo anterior y exposición relativa del suelo a la lluvia. Son dos lecturas separadas; no se suman en un puntaje.
-- `POST /api/reading` — lectura inicial del análisis con un modelo de DeepSeek: un resumen en lenguaje simple y puntos a favor, posibles problemas y cosas por revisar.
-- `GET` y `POST /api/recommend` — recomendaciones con su porqué, a pedido. El `GET` dice si hay clave configurada.
-- `POST /api/ask` — responde una pregunta sobre el análisis y sus recomendaciones.
-- `POST /api/report` — los resultados de un análisis como archivo PDF (botón "Descargar PDF"). Se escribe con lo que el servidor ya calculó y guardó; incluye la lectura y las recomendaciones de la IA solo si ya se habían generado.
+### Other routes
 
-Las tres rutas de IA usan solo resultados ya calculados y guardados por el servidor, no envían las coordenadas al modelo y descartan cualquier texto que mencione una cifra que no está en el análisis o que se apoye en una fuente sin datos. Necesitan `DEEPSEEK_API_KEY`; sin la clave, esas secciones no aparecen.
+- `GET /api/geocode?q=…&lang=en` — searches for places.
+- `GET /api/geocode/reverse?lat=…&lon=…&lang=en` — says in words where a point falls: town, region and country.
+- `POST /api/rotations` — compares declared rotations: published evidence about the previous crop, and the soil's relative exposure to rain. They are two separate readings; they are not added into a score.
+- `POST /api/reading` — first reading of the analysis written by a Claude model (Anthropic): a plain-language summary and points in favour, possible problems and things to check.
+- `GET` and `POST /api/recommend` — recommendations, each with its reason, on request. The `GET` says whether a key is configured.
+- `POST /api/ask` — answers a question about the analysis and its recommendations.
+- `POST /api/report` — the results of an analysis as a PDF file ("Download PDF" button). It is written from what the server already computed and cached; it includes the model's reading and recommendations only if they had already been generated.
 
-### Variables de entorno
+The three model routes use only results the server already computed and cached, do not send the coordinates to the model, and discard any text that mentions a figure that is not in the analysis or that leans on a source with no data. They need `ANTHROPIC_API_KEY`; without the key those sections do not appear.
 
-Ninguna es obligatoria. Están descritas en `.env.example`; para usarlas, copiar ese archivo a `.env.local`.
+### Environment variables
 
-## Dónde se cambia cada cosa
+None is required. They are described in `.env.example`; to use them, copy that file to `.env.local`.
 
-| Qué | Dónde |
+## Where each thing is changed
+
+| What | Where |
 |---|---|
-| Textos del landing | `lib/i18n/es.ts` y `lib/i18n/en.ts` |
-| Textos de la app | `lib/i18n/app/` |
-| Textos de cada fuente de datos | `lib/analysis/sources/*.messages.ts` |
-| Cada fuente de datos | `lib/analysis/sources/` |
-| Contrato de datos (tipos) | `lib/analysis/types.ts` |
-| Modelo de rotaciones y cifras del estudio | `lib/rotation/` |
-| Pantalla de la app | `components/app/` |
-| Enlace del landing a la app | `DEMO_URL` en `lib/site.ts` |
-| Colores, tipografía, sombras | `app/globals.css` (bloque `@theme`) |
-| Paisaje pixelado del hero y del cierre | `components/pixel/field-scene.ts` |
-| Nubes y marcas del cielo | `components/pixel/sky-scene.ts` |
-| Secciones de la página | `components/landing/` |
+| Landing copy | `lib/i18n/en.ts` and `lib/i18n/es.ts` |
+| App copy | `lib/i18n/app/` |
+| Copy for each data source | `lib/analysis/sources/*.messages.ts` |
+| Each data source | `lib/analysis/sources/` |
+| Data contract (types) | `lib/analysis/types.ts` |
+| Rotation model and the study's figures | `lib/rotation/` |
+| Model texts: facts, prompts and checks | `lib/explain/` |
+| PDF report | `lib/report/` |
+| App screen | `components/app/` |
+| Link from the landing to the app | `DEMO_URL` in `lib/site.ts` |
+| Colours, type, shadows | `app/globals.css` (`@theme` block) |
+| Pixel landscape of the hero and the closing | `components/pixel/field-scene.ts` |
+| Clouds and marks in the sky | `components/pixel/sky-scene.ts` |
+| Page sections | `components/landing/` |
 
-Los dos idiomas tienen que tener la misma estructura y las mismas cifras; `pnpm test` lo comprueba.
+Both languages must have the same structure and the same figures; `pnpm test` checks it.
 
-## Publicar
+## Deploying
 
-En Vercel funciona sin configuración. La caché de resultados vive en una carpeta temporal del servidor, así que se pierde cuando la instancia se reinicia. El primer análisis de un lugar nuevo tarda cerca de un minuto por la lluvia. Si se publica en otro lado, definir `NEXT_PUBLIC_SITE_URL` con la dirección pública (por ejemplo `https://beforetheseed.example`) para que los enlaces entre idiomas del `<head>` apunten al dominio correcto.
+It runs on Vercel with no configuration. On Vercel the analysis cache is shared between routes through Vercel's Runtime Cache; elsewhere it lives in a folder on the server. The first analysis of a new place takes about a minute because of the rainfall service. If you deploy somewhere else, set `NEXT_PUBLIC_SITE_URL` to the public address so the links between languages in the `<head>` point to the right domain.
 
-## De dónde salen las cifras
+## Where the figures come from
 
-Cada número de la página lleva su origen (observado, modelado, declarado o de un estudio) y su fuente:
+Every number on the page carries its origin (observed, modelled, declared or from a study) and its source:
 
-- Incidencia de amachamiento según el cultivo anterior: Chaves y Araya (2012), *Agronomía Costarricense* 36(2). Región Brunca, 2009. Estudio observacional, sin réplicas.
-- Pérdida de suelo relativa (landing): prueba propia con RUSLE en una parcela de ladera en Cartago. Solo sirve para comparar; no son toneladas.
-- Exposición del suelo en la app: cada mes pesa según su lluvia al cuadrado (índice de Fournier modificado, Arnoldus 1980) y la cobertura protege según exp(−b × % de cobertura), con b entre 0,025 y 0,05 (documentación de RUSLE2). La cobertura de cada mes la declara la persona.
-- Tamaños de píxel: los de cada producto (Landsat 30 m, SRTM 30 m, SoilGrids 250 m, IMERG ~11 km, NASA POWER ~55 km).
+- Incidence of amachamiento by previous crop: Chaves and Araya (2012), *Agronomía Costarricense* 36(2): 61-70. Brunca region, 2009. An observational study, without replicates.
+- Relative soil loss (landing): our own test with RUSLE on a hillside plot in Cartago. It only serves to compare; it is not tonnes.
+- Soil exposure in the app: each month weighs by its rainfall squared (modified Fournier index, Arnoldus 1980) and cover protects by exp(−b × % cover), with b between 0.025 and 0.05 (RUSLE2 documentation). The cover of each month is declared by the person.
+- Pixel sizes: those of each product (Landsat 30 m, SRTM 30 m, SoilGrids 250 m, IMERG ~11 km, NASA POWER ~55 km).
+
+What satellites do not tell, and the app does not claim: the crop that was grown, the presence of a nematode or a disease, or tonnes of soil lost. Those come from the farmer, the agronomist and the studies.
+
+## Use of Super Intelligence (SI / AI)
+
+This project was built with SI tools, and we say where:
+
+- **Code.** The source code in this repository was written with an SI coding assistant (Claude Code, by Anthropic) under the team's direction. It is acknowledged here and in the `description` field of `package.json`.
+- **Copy.** The texts of the landing page and the app were drafted with SI assistance.
+- **Inside the app.** A Claude model (Anthropic, `claude-haiku-5-5` by default) writes the plain-language reading, the recommendations and the answers to questions. Those texts are labelled as written by a model in the interface and in the PDF. The model receives only the results the server already computed, never the coordinates, and any text containing a figure that is not in the analysis is discarded.
+- **Demo video.** The demo video was produced with SI tools and carries a visible "SI" watermark.
+- **Data.** No data was generated by SI. Every figure comes from the sources listed above.
+
+No NASA logo, flag or mission identifier is used anywhere in the project.
+
+## License
+
+[Apache License 2.0](LICENSE). The datasets keep their own licences and terms; see each provider.

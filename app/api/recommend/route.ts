@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createRateLimiter } from "@/lib/analysis/rate-limit";
 import { checkAdvice, type Advice } from "@/lib/explain/advice";
-import { adviceModel, isAdviceConfigured } from "@/lib/explain/deepseek";
+import { adviceModel, isAdviceConfigured } from "@/lib/explain/claude";
 import { generateChecked } from "@/lib/explain/generate";
 import { advicePrompt, factsMessage } from "@/lib/explain/prompts";
 import {
