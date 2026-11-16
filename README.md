@@ -104,7 +104,7 @@ What satellites do not tell, and the app does not claim: the crop that was grown
 
 This project was built with SI tools, and we say where:
 
-- **Code.** The source code in this repository was written with an SI coding assistant (Claude Code, by Anthropic) under the team's direction. It is acknowledged here and in the `description` field of `package.json`.
+- **Code.** The source code in this repository was written jointly by the team and an SI coding assistant (Claude Code, by Anthropic). It is acknowledged here and in the `description` field of `package.json`.
 - **Copy.** The texts of the landing page and the app were drafted with SI assistance.
 - **Inside the app.** A Claude model (Anthropic, `claude-haiku-5-5` by default) writes the plain-language reading, the recommendations and the answers to questions. Those texts are labelled as written by a model in the interface and in the PDF. The model receives only the results the server already computed, never the coordinates, and any text containing a figure that is not in the analysis is discarded.
 - **Demo video.** The demo video was produced with SI tools and carries a visible "SI" watermark.
