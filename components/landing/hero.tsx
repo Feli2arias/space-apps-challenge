@@ -1,7 +1,8 @@
 // Contract: Hero
 // Props: dict (Dictionary, required)
 // Variants: none
-// States: static content; the two canvases animate only while visible and when motion is allowed
+// States: the first call to action opens the app (the "how it works" section while DEMO_URL
+//         is null); static content; the two canvases animate only while visible and when motion is allowed
 // Accessibility: holds the page's only h1; both canvases are decorative and hidden from
 //                assistive tech; the highlighted line is ink on cinnabar (6.3:1)
 // Responsive: headline scales with the viewport; the side rails appear from lg (1024px);
@@ -11,7 +12,7 @@ import { PixelCanvas } from "@/components/pixel/pixel-canvas";
 import { Container } from "@/components/ui/container";
 import { PixelLink } from "@/components/ui/pixel-link";
 import type { Dictionary } from "@/lib/i18n/types";
-import { SECTION_ID } from "@/lib/site";
+import { DEMO_URL, SECTION_ID } from "@/lib/site";
 import { SiteNav } from "./site-nav";
 
 interface HeroProps {
@@ -51,7 +52,7 @@ export function Hero({ dict }: HeroProps) {
           <p className="mt-6 max-w-[48ch] text-lead text-muted">{hero.lead}</p>
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
-            <PixelLink href={`#${SECTION_ID.how}`} withArrow>
+            <PixelLink href={DEMO_URL ? DEMO_URL[dict.locale] : `#${SECTION_ID.how}`} withArrow>
               {hero.primaryCta}
             </PixelLink>
             <PixelLink href={`#${SECTION_ID.rotations}`} variant="outline">

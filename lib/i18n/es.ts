@@ -26,7 +26,7 @@ export const es: Dictionary = {
     titleLines: ["Antes de", "la semilla,"],
     titleHighlight: "conoce la tierra",
     lead: "Escribe unas coordenadas y mira la lluvia, la pendiente y el historial que se ve desde el espacio. Conoce el terreno antes de alquilar y compara rotaciones antes de sembrar.",
-    primaryCta: "Ver cómo funciona",
+    primaryCta: "Abrir demo",
     secondaryCta: "Las tres rotaciones",
     note: "NASA Space Apps 2026 · Reto Field Shift · Piloto en Costa Rica",
   },

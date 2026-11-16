@@ -26,7 +26,7 @@ export const en: Dictionary = {
     titleLines: ["Before", "the seed,"],
     titleHighlight: "know the land",
     lead: "Enter a pair of coordinates and see the rainfall, the slope and the history visible from space. Know the plot before you rent, and compare rotations before you plant.",
-    primaryCta: "See how it works",
+    primaryCta: "Open demo",
     secondaryCta: "The three rotations",
     note: "NASA Space Apps 2026 · Field Shift challenge · Pilot in Costa Rica",
   },
